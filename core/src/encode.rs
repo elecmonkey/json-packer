@@ -12,18 +12,14 @@ fn encode_value(value: &Value, writer: &mut BitWriter, huffman: &HuffmanCodec) -
         Value::Number(n) => {
             if let Some(i) = n.as_i64() {
                 writer.write_bits(tag::INT as u64, 3);
+                // is_unsigned = 0
+                writer.write_bits(0, 1);
                 varint::write_sleb128(writer, i);
             } else if let Some(u) = n.as_u64() {
-                if u <= i64::MAX as u64 {
-                    writer.write_bits(tag::INT as u64, 3);
-                    varint::write_sleb128(writer, u as i64);
-                } else {
-                    // 超过 i64 范围，转为 f64 编码（可能丢精度，后续可扩展为 ULEB128 分支）
-                    let f = n.as_f64().ok_or(Error::IllegalFloat)?;
-                    if !f.is_finite() { return Err(Error::IllegalFloat); }
-                    writer.write_bits(tag::FLOAT as u64, 3);
-                    writer.write_bits(f.to_bits(), 64);
-                }
+                writer.write_bits(tag::INT as u64, 3);
+                // is_unsigned = 1
+                writer.write_bits(1, 1);
+                varint::write_uleb128(writer, u);
             } else if let Some(f) = n.as_f64() {
                 if !f.is_finite() { return Err(Error::IllegalFloat); }
                 writer.write_bits(tag::FLOAT as u64, 3);

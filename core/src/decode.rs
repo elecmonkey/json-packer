@@ -17,8 +17,15 @@ fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value,
         tag::BOOL_FALSE => Ok(Value::Bool(false)),
         tag::BOOL_TRUE => Ok(Value::Bool(true)),
         tag::INT => {
-            let i = varint::read_sleb128(reader)?;
-            Ok(Value::Number(i.into()))
+            let is_unsigned = reader.read_bits(1)? as u8;
+            if is_unsigned == 0 {
+                let i = varint::read_sleb128(reader)?;
+                Ok(Value::Number(i.into()))
+            } else {
+                let u = varint::read_uleb128(reader)?;
+                // 尝试优先 as_u64 构造 JSON Number；serde_json::Number 支持 u64
+                Ok(serde_json::Number::from(u).into())
+            }
         }
         tag::FLOAT => {
             let bits = reader.read_bits(64)?;
@@ -92,8 +99,20 @@ mod tests {
         let v = json!({
             "用户": {"姓名": "张三🙂", "年龄": 25},
             "tags": ["a", "b", "c"],
-            "nums": [1, -2, 3, 4],
+            "nums": [1, -2, 3, 4, 18446744073709551615u64],
             "pi": 3.141592653589793
+        });
+        let bytes = encode_to_bytes(&v).unwrap();
+        let out = decompress_from_bytes(&bytes).unwrap();
+        assert_eq!(v, out);
+    }
+
+    #[test]
+    fn roundtrip_integer_boundaries() {
+        let v = json!({
+            "i_min": i64::MIN,
+            "i_max": i64::MAX,
+            "u_max": 18446744073709551615u64
         });
         let bytes = encode_to_bytes(&v).unwrap();
         let out = decompress_from_bytes(&bytes).unwrap();
