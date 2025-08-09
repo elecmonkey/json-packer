@@ -22,7 +22,7 @@ impl BitWriter {
             let chunk = value & mask;
             self.bit_bucket |= chunk << self.bit_len;
             self.bit_len += take as u8;
-            value >>= take;
+            value = if take >= 64 { 0 } else { value >> take };
             n_bits -= take;
 
             // 每满 8 位就落盘
@@ -98,7 +98,7 @@ impl<'a> BitReader<'a> {
             let mask = if take == 64 { u64::MAX } else { (1u64 << take) - 1 };
             let chunk = self.bit_bucket & mask;
             out |= chunk << out_shift;
-            self.bit_bucket >>= take;
+            self.bit_bucket = if take >= 64 { 0 } else { self.bit_bucket >> take };
             self.bit_len -= take as u8;
             out_shift += take;
             needed -= take;
