@@ -17,7 +17,7 @@ pub use huffman::HuffmanCodec;
 /// 压缩 JSON 到字节数组
 pub fn compress_to_bytes(value: &serde_json::Value) -> Result<Vec<u8>, Error> { encode::compress_to_bytes(value) }
 
-/// 压缩 JSON 到 Base64 字符串（占位实现）
+/// 压缩 JSON 到 Base64 字符串
 pub fn compress_to_base64(value: &serde_json::Value) -> Result<String, Error> {
     let bytes = compress_to_bytes(value)?;
     Ok(encode_base64(&bytes))
@@ -26,7 +26,7 @@ pub fn compress_to_base64(value: &serde_json::Value) -> Result<String, Error> {
 /// 从字节数组解压为 JSON
 pub fn decompress_from_bytes(bytes: &[u8]) -> Result<serde_json::Value, Error> { decode::decompress_from_bytes(bytes) }
 
-/// 从 Base64 字符串解压为 JSON（占位实现）
+/// 从 Base64 字符串解压为 JSON
 pub fn decompress_from_base64(s: &str) -> Result<serde_json::Value, Error> {
     let bytes = decode_base64(s)?;
     decompress_from_bytes(&bytes)

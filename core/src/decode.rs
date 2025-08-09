@@ -61,7 +61,7 @@ fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value,
             }
             Ok(Value::Object(map))
         }
-        _ => Err(Error::Unimplemented("unknown type tag")),
+        _ => Err(Error::HuffmanError),
     }
 }
 
