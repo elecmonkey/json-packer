@@ -6,6 +6,7 @@ mod varint;
 mod header;
 mod dict;
 mod huffman;
+mod encode;
 
 pub use error::Error;
 pub use base64util::{encode_base64, decode_base64};
@@ -13,8 +14,8 @@ pub use dict::{collect_keys, write_dictionary, read_dictionary};
 pub use huffman::HuffmanCodec;
 
 /// 压缩 JSON 到字节数组（占位实现：未实现）
-pub fn compress_to_bytes(_value: &serde_json::Value) -> Result<Vec<u8>, Error> {
-    Err(Error::Unimplemented("compress_to_bytes"))
+pub fn compress_to_bytes(value: &serde_json::Value) -> Result<Vec<u8>, Error> {
+    encode::compress_to_bytes(value)
 }
 
 /// 压缩 JSON 到 Base64 字符串（占位实现）
