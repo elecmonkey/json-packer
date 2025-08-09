@@ -4,18 +4,13 @@ mod types;
 mod bitstream;
 mod varint;
 mod header;
+mod dict;
+mod huffman;
 
 pub use error::Error;
-
-/// 将压缩后的字节数组编码为 Base64 字符串
-pub fn encode_base64(bytes: &[u8]) -> String {
-    base64util::encode_base64(bytes)
-}
-
-/// 将 Base64 字符串解码为字节数组
-pub fn decode_base64(s: &str) -> Result<Vec<u8>, Error> {
-    base64util::decode_base64(s)
-}
+pub use base64util::{encode_base64, decode_base64};
+pub use dict::{collect_keys, write_dictionary, read_dictionary};
+pub use huffman::HuffmanCodec;
 
 /// 压缩 JSON 到字节数组（占位实现：未实现）
 pub fn compress_to_bytes(_value: &serde_json::Value) -> Result<Vec<u8>, Error> {
