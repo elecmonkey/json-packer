@@ -27,7 +27,11 @@ impl HuffmanCodec {
 
         if symbols.is_empty() {
             // 空字典：允许构建一个空的解码器（解码时会失败）
-            return Ok(HuffmanCodec { enc_map: HashMap::new(), root: Box::new(Node::Internal { left: Box::new(Node::Leaf(String::new())), right: Box::new(Node::Leaf(String::new())) }) });
+            // 空字典：构造一个不可用的解码器，但避免崩溃
+            return Ok(HuffmanCodec {
+                enc_map: HashMap::new(),
+                root: Box::new(Node::Leaf(String::new())),
+            });
         }
 
         // 特殊情况：只有一个符号，分配长度1的码字 "0"
@@ -36,10 +40,7 @@ impl HuffmanCodec {
             let mut enc_map = HashMap::new();
             // LSB-first: 单比特0
             enc_map.insert(key.clone(), (0, 1));
-            let root = Box::new(Node::Internal {
-                left: Box::new(Node::Leaf(key)),
-                right: Box::new(Node::Leaf(String::new())), // 未使用分支
-            });
+            let root = Box::new(Node::Leaf(key));
             return Ok(HuffmanCodec { enc_map, root });
         }
 

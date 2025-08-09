@@ -28,12 +28,15 @@ pub fn read_uleb128(reader: &mut BitReader) -> Result<u64, Error> {
 pub fn write_sleb128(writer: &mut BitWriter, mut value: i64) {
     loop {
         let byte = (value as u8) & 0x7F;
-        let sign_bit_set = (value & !0x3F) == 0 || (value & !0x3F) == !0;
-        let has_more = !sign_bit_set;
-        let out = if has_more { byte | 0x80 } else { byte };
-        writer.write_byte(out);
-        value >>= 7;
-        if !has_more { break; }
+        let sign_bit = (byte & 0x40) != 0;
+        let done = (value == 0 && !sign_bit) || (value == -1 && sign_bit);
+        if done {
+            writer.write_byte(byte);
+            break;
+        } else {
+            writer.write_byte(byte | 0x80);
+            value >>= 7;
+        }
     }
 }
 
