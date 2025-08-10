@@ -26,6 +26,8 @@ pub mod test_expose {
     pub use crate::header::{read_header, write_header, MAGIC, VERSION_V1, VERSION_V2};
     pub use crate::dict::{collect_keys, read_dictionary, write_dictionary};
     pub use crate::types::tag;
+    pub use crate::pool::{collect_string_pool, write_string_pool};
+    pub use crate::encode::{compress_with_options, CompressOptions};
 }
 
 
