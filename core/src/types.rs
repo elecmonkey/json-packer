@@ -15,5 +15,3 @@ pub mod tag {
 pub fn is_finite_f64(v: f64) -> bool {
     v.is_finite()
 }
-
-

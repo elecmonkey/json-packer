@@ -69,29 +69,3 @@ pub fn compress_to_bytes(value: &Value) -> Result<Vec<u8>, Error> {
 
     Ok(writer.into_bytes())
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::{bitstream::BitReader, header::read_header, dict::read_dictionary};
-    use serde_json::json;
-
-    #[test]
-    fn encode_header_and_dict_roundtrip() {
-        let value = json!({
-            "name": "Alice",
-            "age": 30,
-            "info": {"name": "A"}
-        });
-        let bytes = compress_to_bytes(&value).unwrap();
-        let mut reader = BitReader::new(&bytes);
-        let hdr = read_header(&mut reader).unwrap();
-        assert_eq!(hdr.pool_len, 0);
-        let dict = read_dictionary(&mut reader).unwrap();
-        // name:2, age:1, info:1
-        assert_eq!(dict.get("name"), Some(&2));
-        assert_eq!(dict.get("age"), Some(&1));
-        assert_eq!(dict.get("info"), Some(&1));
-        assert_eq!(hdr.dict_len as usize, dict.len());
-    }
-}

@@ -233,35 +233,3 @@ fn insert_codeword(root: &mut Node, key: &str, code_msb: u32, len: u8) -> Result
     *node = Node::Leaf(key.to_string());
     Ok(())
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn simple_huffman() {
-        let mut freq = HashMap::new();
-        freq.insert("name".to_string(), 2);
-        freq.insert("age".to_string(), 1);
-        let codec = HuffmanCodec::from_frequencies(&freq).unwrap();
-        assert!(codec.try_get_code("name").is_some());
-        assert!(codec.try_get_code("age").is_some());
-    }
-
-    #[test]
-    fn encode_decode_roundtrip() {
-        let mut freq = HashMap::new();
-        freq.insert("name".to_string(), 2);
-        freq.insert("age".to_string(), 1);
-        let codec = HuffmanCodec::from_frequencies(&freq).unwrap();
-        let mut w = BitWriter::new();
-        codec.write_key_code("name", &mut w).unwrap();
-        codec.write_key_code("age", &mut w).unwrap();
-        let bytes = w.into_bytes();
-        let mut r = BitReader::new(&bytes);
-        let k1 = codec.decode_key(&mut r).unwrap();
-        let k2 = codec.decode_key(&mut r).unwrap();
-        assert_eq!(k1, "name");
-        assert_eq!(k2, "age");
-    }
-}

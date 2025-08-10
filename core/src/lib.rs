@@ -14,6 +14,16 @@ pub use base64util::{encode_base64, decode_base64};
 pub use dict::{collect_keys, write_dictionary, read_dictionary};
 pub use huffman::HuffmanCodec;
 
+#[doc(hidden)]
+pub mod test_expose {
+    pub use crate::bitstream::{BitReader, BitWriter};
+    pub use crate::varint::{read_sleb128, read_uleb128, write_sleb128, write_uleb128};
+    pub use crate::header::{read_header, write_header, MAGIC, VERSION};
+    pub use crate::dict::{collect_keys, read_dictionary, write_dictionary};
+    pub use crate::types::tag;
+}
+
+
 /// 压缩 JSON 到字节数组
 pub fn compress_to_bytes(value: &serde_json::Value) -> Result<Vec<u8>, Error> { encode::compress_to_bytes(value) }
 
@@ -30,17 +40,4 @@ pub fn decompress_from_bytes(bytes: &[u8]) -> Result<serde_json::Value, Error> {
 pub fn decompress_from_base64(s: &str) -> Result<serde_json::Value, Error> {
     let bytes = decode_base64(s)?;
     decompress_from_bytes(&bytes)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn base64_roundtrip() {
-        let data = vec![0, 1, 2, 3, 254, 255];
-        let b64 = encode_base64(&data);
-        let back = decode_base64(&b64).unwrap();
-        assert_eq!(data, back);
-    }
 }

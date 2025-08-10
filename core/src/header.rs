@@ -40,20 +40,3 @@ pub fn read_header(reader: &mut BitReader) -> Result<PackageHeader, Error> {
     let pool_len = varint::read_uleb128(reader)?;
     Ok(PackageHeader { version: ver, dict_len, pool_len })
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn header_roundtrip() {
-        let mut w = BitWriter::new();
-        write_header(&mut w, 12, 0);
-        let bytes = w.into_bytes();
-        let mut r = BitReader::new(&bytes);
-        let h = read_header(&mut r).unwrap();
-        assert_eq!(h.version, VERSION);
-        assert_eq!(h.dict_len, 12);
-        assert_eq!(h.pool_len, 0);
-    }
-}

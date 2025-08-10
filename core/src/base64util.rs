@@ -13,4 +13,3 @@ pub fn decode_base64(s: &str) -> Result<Vec<u8>, Error> {
         Err(_) => Ok(STANDARD.decode(s)?),
     }
 }
-
