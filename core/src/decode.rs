@@ -1,7 +1,7 @@
 use serde_json::{Map, Value};
 
 use crate::{
-    bitstream::{BitReader},
+    bitstream::BitReader,
     dict,
     header,
     huffman::HuffmanCodec,
