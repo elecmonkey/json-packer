@@ -15,6 +15,7 @@ pub use base64util::{encode_base64, decode_base64};
 pub use dict::{collect_keys, write_dictionary, read_dictionary};
 pub use huffman::HuffmanCodec;
 pub use pool::{StringPool, PoolConfig};
+pub use encode::{CompressOptions, set_global_compress_options, get_global_compress_options};
 
 #[doc(hidden)]
 pub use header::{VERSION_V1, VERSION_V2};
