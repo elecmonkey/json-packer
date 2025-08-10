@@ -10,8 +10,3 @@ pub mod tag {
     pub const OBJECT: u8 = 0b110;
     pub const ARRAY: u8 = 0b111;
 }
-
-#[inline]
-pub fn is_finite_f64(v: f64) -> bool {
-    v.is_finite()
-}
