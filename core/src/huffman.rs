@@ -40,7 +40,11 @@ impl HuffmanCodec {
             let mut enc_map = HashMap::new();
             // LSB-first: 单比特0
             enc_map.insert(key.clone(), (0, 1));
-            let root = Box::new(Node::Leaf(key));
+            // 为保证解码消费1位（对齐），构造一个内部节点，左分支为 key，右分支为哑叶
+            let root = Box::new(Node::Internal {
+                left: Box::new(Node::Leaf(key)),
+                right: Box::new(Node::Leaf(String::new())),
+            });
             return Ok(HuffmanCodec { enc_map, root });
         }
 
