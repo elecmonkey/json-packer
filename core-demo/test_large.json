@@ -1,0 +1,244 @@
+{
+  "api_version": "2.1.0",
+  "timestamp": "2025-01-15T10:30:45.123Z",
+  "request_id": "req_7f8a9b2c3d4e5f6g",
+  "metadata": {
+    "service": "user-management",
+    "environment": "production",
+    "region": "us-west-2",
+    "instance_id": "i-0123456789abcdef0"
+  },
+  "users": [
+    {
+      "id": 1001,
+      "username": "alice_smith",
+      "email": "alice.smith@example.com",
+      "profile": {
+        "first_name": "Alice",
+        "last_name": "Smith",
+        "age": 28,
+        "avatar_url": "https://cdn.example.com/avatars/alice.jpg",
+        "bio": "Software engineer passionate about distributed systems 🚀",
+        "location": {
+          "country": "United States",
+          "state": "California",
+          "city": "San Francisco",
+          "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+          }
+        }
+      },
+      "preferences": {
+        "theme": "dark",
+        "language": "en-US",
+        "notifications": {
+          "email": true,
+          "push": false,
+          "sms": true
+        },
+        "privacy": {
+          "profile_visibility": "public",
+          "show_email": false,
+          "show_location": true
+        }
+      },
+      "activity": {
+        "last_login": "2025-01-15T09:15:30.456Z",
+        "login_count": 1247,
+        "created_at": "2023-03-15T14:22:11.789Z",
+        "updated_at": "2025-01-14T16:45:23.012Z"
+      },
+      "roles": ["user", "premium"],
+      "tags": ["active", "premium", "verified"],
+      "statistics": {
+        "posts_created": 156,
+        "comments_made": 892,
+        "likes_received": 2341,
+        "followers": 187,
+        "following": 94
+      }
+    },
+    {
+      "id": 1002,
+      "username": "bob_johnson",
+      "email": "bob.johnson@example.com",
+      "profile": {
+        "first_name": "Bob",
+        "last_name": "Johnson",
+        "age": 34,
+        "avatar_url": "https://cdn.example.com/avatars/bob.jpg",
+        "bio": "Frontend developer & UI/UX enthusiast 🎨✨",
+        "location": {
+          "country": "Canada",
+          "state": "Ontario",
+          "city": "Toronto",
+          "coordinates": {
+            "latitude": 43.6532,
+            "longitude": -79.3832
+          }
+        }
+      },
+      "preferences": {
+        "theme": "light",
+        "language": "en-CA",
+        "notifications": {
+          "email": false,
+          "push": true,
+          "sms": false
+        },
+        "privacy": {
+          "profile_visibility": "friends",
+          "show_email": false,
+          "show_location": false
+        }
+      },
+      "activity": {
+        "last_login": "2025-01-14T22:30:15.678Z",
+        "login_count": 892,
+        "created_at": "2023-07-22T10:15:45.234Z",
+        "updated_at": "2025-01-13T11:20:18.567Z"
+      },
+      "roles": ["user", "moderator"],
+      "tags": ["moderator", "designer", "active"],
+      "statistics": {
+        "posts_created": 89,
+        "comments_made": 445,
+        "likes_received": 1567,
+        "followers": 234,
+        "following": 156
+      }
+    },
+    {
+      "id": 1003,
+      "username": "charlie_brown",
+      "email": "charlie.brown@example.com",
+      "profile": {
+        "first_name": "Charlie",
+        "last_name": "Brown",
+        "age": 45,
+        "avatar_url": "https://cdn.example.com/avatars/charlie.jpg",
+        "bio": "DevOps engineer | Cloud architecture specialist ☁️🔧",
+        "location": {
+          "country": "United Kingdom",
+          "state": "England",
+          "city": "London",
+          "coordinates": {
+            "latitude": 51.5074,
+            "longitude": -0.1278
+          }
+        }
+      },
+      "preferences": {
+        "theme": "auto",
+        "language": "en-GB",
+        "notifications": {
+          "email": true,
+          "push": true,
+          "sms": true
+        },
+        "privacy": {
+          "profile_visibility": "public",
+          "show_email": true,
+          "show_location": true
+        }
+      },
+      "activity": {
+        "last_login": "2025-01-15T08:45:22.345Z",
+        "login_count": 2156,
+        "created_at": "2022-11-08T16:33:27.890Z",
+        "updated_at": "2025-01-15T07:12:45.123Z"
+      },
+      "roles": ["user", "admin"],
+      "tags": ["admin", "veteran", "mentor"],
+      "statistics": {
+        "posts_created": 445,
+        "comments_made": 1892,
+        "likes_received": 5634,
+        "followers": 567,
+        "following": 234
+      }
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "per_page": 3,
+    "total_pages": 334,
+    "total_users": 1001,
+    "has_next": true,
+    "has_prev": false
+  },
+  "response_times": {
+    "database_query_ms": 23.45,
+    "cache_lookup_ms": 1.23,
+    "serialization_ms": 4.56,
+    "total_response_ms": 29.24
+  },
+  "feature_flags": {
+    "enable_dark_mode": true,
+    "enable_notifications": true,
+    "enable_analytics": false,
+    "enable_beta_features": true,
+    "maintenance_mode": false
+  },
+  "system_info": {
+    "server_version": "3.2.1",
+    "database_version": "PostgreSQL 14.5",
+    "cache_version": "Redis 7.0.5",
+    "uptime_seconds": 1234567,
+    "memory_usage_mb": 2048.75,
+    "cpu_usage_percent": 15.3,
+    "disk_usage_gb": 845.2,
+    "active_connections": 156
+  },
+  "configuration": {
+    "max_users_per_page": 50,
+    "session_timeout_minutes": 30,
+    "rate_limit_per_minute": 100,
+    "file_upload_max_size_mb": 10,
+    "supported_languages": ["en-US", "en-GB", "en-CA", "fr-FR", "de-DE", "es-ES", "ja-JP", "zh-CN"],
+    "available_themes": ["light", "dark", "auto"],
+    "security": {
+      "password_min_length": 8,
+      "require_2fa": false,
+      "session_encryption": true,
+      "audit_logging": true
+    }
+  },
+  "analytics": {
+    "daily_active_users": 12567,
+    "weekly_active_users": 45678,
+    "monthly_active_users": 123456,
+    "new_registrations_today": 89,
+    "average_session_duration_minutes": 23.5,
+    "bounce_rate_percent": 12.3,
+    "popular_features": [
+      {"feature": "profile_editing", "usage_count": 5678},
+      {"feature": "messaging", "usage_count": 8901},
+      {"feature": "file_sharing", "usage_count": 3456},
+      {"feature": "notifications", "usage_count": 9876}
+    ]
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "code": "DEPRECATION_WARNING",
+      "message": "API endpoint /v1/users is deprecated. Please use /v2/users instead.",
+      "timestamp": "2025-01-15T10:30:45.123Z"
+    }
+  ],
+  "debug_info": {
+    "query_execution_plan": "Index Scan using users_username_idx on users",
+    "cache_hit_ratio": 0.95,
+    "sql_queries": [
+      "SELECT * FROM users WHERE active = true ORDER BY created_at DESC LIMIT 3 OFFSET 0",
+      "SELECT COUNT(*) FROM users WHERE active = true"
+    ],
+    "performance_markers": {
+      "request_start": "2025-01-15T10:30:45.000Z",
+      "auth_complete": "2025-01-15T10:30:45.012Z",
+      "data_fetch_complete": "2025-01-15T10:30:45.098Z",
+      "response_ready": "2025-01-15T10:30:45.123Z"
+    }
+  }
+}
