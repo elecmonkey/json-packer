@@ -10,3 +10,5 @@ napi/index.node
 napi/index.js
 
 wasm/pkg
+
+wasm-demo/dist
