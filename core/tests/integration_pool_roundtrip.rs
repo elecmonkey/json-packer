@@ -1,6 +1,6 @@
 use serde_json::json;
-use json_packer_core::{compress_to_bytes, decompress_from_bytes};
-use json_packer_core::test_expose::{compress_with_options, CompressOptions};
+use json_packer_core::{compress_to_bytes, decompress_from_bytes, CompressOptions};
+use json_packer_core::test_expose::compress_with_options;
 
 #[test]
 fn v2_string_pool_roundtrip_and_benefit() {
@@ -14,7 +14,7 @@ fn v2_string_pool_roundtrip_and_benefit() {
         ]
     });
 
-    let bytes_v1 = compress_to_bytes(&v).unwrap();
+    let bytes_v1 = compress_to_bytes(&v, &CompressOptions::default()).unwrap();
 
     let opt = CompressOptions { enable_value_pool: true, pool_min_repeats: 3, pool_min_string_len: 8 };
     let bytes_v2 = compress_with_options(&v, &opt).unwrap();

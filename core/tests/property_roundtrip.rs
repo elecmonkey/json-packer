@@ -1,6 +1,6 @@
 use proptest::prelude::*;
 
-use json_packer_core::{compress_to_bytes, decompress_from_bytes};
+use json_packer_core::{compress_to_bytes, decompress_from_bytes, CompressOptions};
 
 fn arb_json() -> impl Strategy<Value = serde_json::Value> {
     // Build a JSON generator without NaN/Inf
@@ -30,7 +30,7 @@ fn arb_json() -> impl Strategy<Value = serde_json::Value> {
 proptest! {
     #[test]
     fn prop_roundtrip(v in arb_json()) {
-        let bytes = compress_to_bytes(&v).unwrap();
+        let bytes = compress_to_bytes(&v, &CompressOptions::default()).unwrap();
         let out = decompress_from_bytes(&bytes).unwrap();
         prop_assert_eq!(v, out);
     }

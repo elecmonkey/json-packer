@@ -1,4 +1,4 @@
-use json_packer_core::{compress_to_bytes, decompress_from_bytes};
+use json_packer_core::{compress_to_bytes, decompress_from_bytes, CompressOptions};
 use serde_json::json;
 
 #[test]
@@ -8,7 +8,7 @@ fn roundtrip_integers() {
         "i_max": i64::MAX,
         "u_max": 18446744073709551615u64
     });
-    let bytes = compress_to_bytes(&v).unwrap();
+    let bytes = compress_to_bytes(&v, &CompressOptions::default()).unwrap();
     let out = decompress_from_bytes(&bytes).unwrap();
     assert_eq!(v, out);
 }
@@ -21,7 +21,7 @@ fn roundtrip_unicode_and_nested() {
         "nums": [1, -2, 3, 4, 18446744073709551615u64],
         "pi": 3.141592653589793
     });
-    let bytes = compress_to_bytes(&v).unwrap();
+    let bytes = compress_to_bytes(&v, &CompressOptions::default()).unwrap();
     let out = decompress_from_bytes(&bytes).unwrap();
     assert_eq!(v, out);
 }

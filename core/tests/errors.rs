@@ -1,4 +1,4 @@
-use json_packer_core::compress_to_bytes;
+use json_packer_core::{compress_to_bytes, CompressOptions};
 use serde_json::json;
 
 #[test]
@@ -28,7 +28,7 @@ fn bad_version() {
 #[test]
 fn truncated_data() {
     let v = json!({"a": 1});
-    let mut bytes = compress_to_bytes(&v).unwrap();
+    let mut bytes = compress_to_bytes(&v, &CompressOptions::default()).unwrap();
     bytes.truncate(bytes.len().saturating_sub(3));
     let err = json_packer_core::decompress_from_bytes(&bytes).unwrap_err();
     // 可能触发 BitstreamOutOfBounds 或 VarintError
