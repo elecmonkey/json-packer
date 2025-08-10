@@ -1,7 +1,5 @@
 use serde_json::Value;
 use crate::{bitstream::BitWriter, header, dict, huffman::HuffmanCodec, types::tag, varint, Error, pool::{collect_string_pool, PoolConfig, write_string_pool}};
-use once_cell::sync::Lazy;
-use std::sync::RwLock;
 
 fn encode_value(value: &Value, writer: &mut BitWriter, huffman: &HuffmanCodec) -> Result<(), Error> {
     match value {
@@ -54,10 +52,6 @@ fn encode_value(value: &Value, writer: &mut BitWriter, huffman: &HuffmanCodec) -
 }
 
 
-pub fn compress_to_bytes(value: &Value) -> Result<Vec<u8>, Error> {
-    compress_with_options(value, &GLOBAL_COMPRESS_OPTIONS.read().unwrap())
-}
-
 #[derive(Debug, Clone)]
 pub struct CompressOptions {
     pub enable_value_pool: bool,
@@ -94,20 +88,6 @@ pub fn compress_with_options(value: &Value, opt: &CompressOptions) -> Result<Vec
     encode_value_dispatch(value, &mut writer, &codec, string_pool.as_ref())?;
 
     Ok(writer.into_bytes())
-}
-
-pub static GLOBAL_COMPRESS_OPTIONS: Lazy<RwLock<CompressOptions>> = Lazy::new(|| RwLock::new(CompressOptions::default()));
-
-/// 设置全局压缩选项（影响后续 compress_to_* 调用）
-pub fn set_global_compress_options(opts: CompressOptions) {
-    if let Ok(mut guard) = GLOBAL_COMPRESS_OPTIONS.write() {
-        *guard = opts;
-    }
-}
-
-/// 获取当前全局压缩选项（拷贝）
-pub fn get_global_compress_options() -> CompressOptions {
-    GLOBAL_COMPRESS_OPTIONS.read().map(|g| g.clone()).unwrap_or_default()
 }
 
 fn encode_value_dispatch(value: &Value, writer: &mut BitWriter, huffman: &HuffmanCodec, string_pool: Option<&crate::pool::StringPool>) -> Result<(), Error> {

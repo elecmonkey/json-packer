@@ -15,7 +15,7 @@ pub use base64util::{encode_base64, decode_base64};
 pub use dict::{collect_keys, write_dictionary, read_dictionary};
 pub use huffman::HuffmanCodec;
 pub use pool::{StringPool, PoolConfig};
-pub use encode::{CompressOptions, set_global_compress_options, get_global_compress_options};
+pub use encode::CompressOptions;
 
 #[doc(hidden)]
 pub use header::{VERSION_V1, VERSION_V2};
@@ -32,12 +32,14 @@ pub mod test_expose {
 }
 
 
-/// 压缩 JSON 到字节数组
-pub fn compress_to_bytes(value: &serde_json::Value) -> Result<Vec<u8>, Error> { encode::compress_to_bytes(value) }
+/// 压缩 JSON 到字节数组（无状态，按调用传入选项）
+pub fn compress_to_bytes(value: &serde_json::Value, opts: &CompressOptions) -> Result<Vec<u8>, Error> {
+    encode::compress_with_options(value, opts)
+}
 
-/// 压缩 JSON 到 Base64 字符串
-pub fn compress_to_base64(value: &serde_json::Value) -> Result<String, Error> {
-    let bytes = compress_to_bytes(value)?;
+/// 压缩 JSON 到 Base64 字符串（无状态，按调用传入选项）
+pub fn compress_to_base64(value: &serde_json::Value, opts: &CompressOptions) -> Result<String, Error> {
+    let bytes = compress_to_bytes(value, opts)?;
     Ok(encode_base64(&bytes))
 }
 
