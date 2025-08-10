@@ -8,3 +8,5 @@ napi/index.d.ts
 napi/index.*.node
 napi/index.node
 napi/index.js
+
+wasm/pkg
