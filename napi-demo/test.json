@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "service": "example-api",
+    "version": "1.2.3",
+    "env": "prod",
+    "region": "us-east-1"
+  },
+  "users": [
+    {"id": 1, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id": 2, "role": "editor",   "status": "active",   "message": "connected to server"},
+    {"id": 3, "role": "admin",    "status": "active",   "message": "connected to server"},
+    {"id": 4, "role": "editor",   "status": "active",   "message": "connected to server"},
+    {"id": 5, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id": 6, "role": "viewer",   "status": "inactive", "message": "disconnected"},
+    {"id": 7, "role": "editor",   "status": "active",   "message": "connected to server"},
+    {"id": 8, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id": 9, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id":10, "role": "editor",   "status": "inactive", "message": "maintenance"},
+    {"id":11, "role": "editor",   "status": "active",   "message": "connected to server"},
+    {"id":12, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id":13, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id":14, "role": "admin",    "status": "active",   "message": "connected to server"},
+    {"id":15, "role": "editor",   "status": "active",   "message": "connected to server"},
+    {"id":16, "role": "viewer",   "status": "inactive", "message": "disconnected"},
+    {"id":17, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id":18, "role": "editor",   "status": "active",   "message": "connected to server"},
+    {"id":19, "role": "viewer",   "status": "active",   "message": "connected to server"},
+    {"id":20, "role": "editor",   "status": "active",   "message": "connected to server"}
+  ],
+  "permissions": {
+    "viewer": ["read"],
+    "editor": ["read", "write"],
+    "admin":  ["read", "write", "delete"]
+  },
+  "audit": {
+    "entries": [
+      {"ts": "2025-01-01T00:00:00Z", "event": "login",  "status": "success"},
+      {"ts": "2025-01-01T00:01:00Z", "event": "login",  "status": "success"},
+      {"ts": "2025-01-01T00:02:00Z", "event": "update", "status": "success"},
+      {"ts": "2025-01-01T00:03:00Z", "event": "sync",   "status": "success"}
+    ]
+  }
+}
