@@ -26,6 +26,12 @@ pub enum Error {
     #[error("Huffman 构建/解码错误")] 
     HuffmanError,
 
+    #[error("值池缺失或未启用")] 
+    PoolMissing,
+
+    #[error("值池引用 ID 越界")] 
+    PoolIdOutOfRange,
+
     #[error("未实现: {0}")] 
     Unimplemented(&'static str),
 }

@@ -8,17 +8,22 @@ mod dict;
 mod huffman;
 mod encode;
 mod decode;
+mod pool;
 
 pub use error::Error;
 pub use base64util::{encode_base64, decode_base64};
 pub use dict::{collect_keys, write_dictionary, read_dictionary};
 pub use huffman::HuffmanCodec;
+pub use pool::{StringPool, PoolConfig};
+
+#[doc(hidden)]
+pub use header::{VERSION_V1, VERSION_V2};
 
 #[doc(hidden)]
 pub mod test_expose {
     pub use crate::bitstream::{BitReader, BitWriter};
     pub use crate::varint::{read_sleb128, read_uleb128, write_sleb128, write_uleb128};
-    pub use crate::header::{read_header, write_header, MAGIC, VERSION};
+    pub use crate::header::{read_header, write_header, MAGIC, VERSION_V1, VERSION_V2};
     pub use crate::dict::{collect_keys, read_dictionary, write_dictionary};
     pub use crate::types::tag;
 }

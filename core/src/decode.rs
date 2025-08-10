@@ -10,7 +10,7 @@ use crate::{
     Error,
 };
 
-fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value, Error> {
+fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec, version: u8, pool: Option<&Vec<Value>>) -> Result<Value, Error> {
     let t = reader.read_bits(3)? as u8;
     match t {
         tag::NULL => Ok(Value::Null),
@@ -34,6 +34,15 @@ fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value,
             Ok(serde_json::Number::from_f64(f).map(Value::Number).ok_or(Error::IllegalFloat)?)
         }
         tag::STRING => {
+            if version == header::VERSION_V2 {
+                let is_ref = reader.read_bits(1)? as u8;
+                if is_ref == 1 {
+                    let id = varint::read_uleb128(reader)? as usize;
+                    let pool = pool.ok_or(Error::PoolMissing)?;
+                    let val = pool.get(id).ok_or(Error::PoolIdOutOfRange)?;
+                    return Ok(val.clone());
+                }
+            }
             let len = varint::read_uleb128(reader)? as usize;
             let mut bytes = Vec::with_capacity(len);
             for _ in 0..len { bytes.push(reader.read_byte()?); }
@@ -43,7 +52,7 @@ fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value,
         tag::ARRAY => {
             let count = varint::read_uleb128(reader)? as usize;
             let mut arr = Vec::with_capacity(count);
-            for _ in 0..count { arr.push(decode_value(reader, huffman)?); }
+            for _ in 0..count { arr.push(decode_value(reader, huffman, version, pool)?); }
             Ok(Value::Array(arr))
         }
         tag::OBJECT => {
@@ -56,7 +65,7 @@ fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value,
                 } else {
                     huffman.decode_key(reader)?
                 };
-                let val = decode_value(reader, huffman)?;
+                let val = decode_value(reader, huffman, version, pool)?;
                 map.insert(key, val);
             }
             Ok(Value::Object(map))
@@ -67,12 +76,18 @@ fn decode_value(reader: &mut BitReader, huffman: &HuffmanCodec) -> Result<Value,
 
 pub fn decode_json(reader: &mut BitReader) -> Result<Value, Error> {
     // 读包头
-    let _hdr = header::read_header(reader)?;
+    let hdr = header::read_header(reader)?;
     // 读字典并构建 Huffman
     let freq = dict::read_dictionary(reader)?;
     let codec = HuffmanCodec::from_frequencies(&freq)?;
+    // 读值池（v2）
+    let pool: Option<Vec<Value>> = if hdr.version == header::VERSION_V2 {
+        let mut entries: Vec<Value> = Vec::with_capacity(hdr.pool_len as usize);
+        for _ in 0..hdr.pool_len { entries.push(decode_value(reader, &codec, header::VERSION_V1, None)?); }
+        Some(entries)
+    } else { None };
     // 读数据区
-    decode_value(reader, &codec)
+    decode_value(reader, &codec, hdr.version, pool.as_ref())
 }
 
 pub fn decompress_from_bytes(bytes: &[u8]) -> Result<Value, Error> {
