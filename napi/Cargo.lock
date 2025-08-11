@@ -55,24 +55,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 
 [[package]]
-name = "json-packer-napi"
-version = "0.1.0"
-dependencies = [
- "json_packer_core",
- "napi",
- "napi-build",
- "napi-derive",
- "serde_json",
-]
-
-[[package]]
-name = "json_packer_core"
+name = "json-packer"
 version = "0.1.0"
 dependencies = [
  "base64",
  "serde",
  "serde_json",
  "thiserror",
+]
+
+[[package]]
+name = "json-packer-napi"
+version = "0.1.0"
+dependencies = [
+ "json-packer",
+ "napi",
+ "napi-build",
+ "napi-derive",
+ "serde_json",
 ]
 
 [[package]]

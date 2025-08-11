@@ -1,6 +1,6 @@
 # json-packer-napi
 
-Node.js N-API 绑定，基于 `json_packer_core` Rust 库。
+Node.js N-API 绑定，基于 `json-packer` Rust 库。
 
 ## 安装
 

@@ -1,5 +1,5 @@
-use json_packer_core as core;
-use json_packer_core::CompressOptions;
+use json_packer as core;
+use json_packer::CompressOptions;
 use napi::bindgen_prelude::*;
 use napi_derive::napi;
 
