@@ -1,6 +1,6 @@
 # json-packer-wasm
 
-WebAssembly 绑定，基于 `json_packer_core` Rust 库，使用 `wasm-bindgen`。
+WebAssembly 绑定，基于 `json-packer` Rust 库，使用 `wasm-bindgen`。
 
 ## 安装
 

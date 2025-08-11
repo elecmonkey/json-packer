@@ -15,8 +15,8 @@ impl Options {
   }
 }
 
-fn to_core_opts(o: &Options) -> json_packer_core::CompressOptions {
-  json_packer_core::CompressOptions {
+fn to_core_opts(o: &Options) -> json_packer::CompressOptions {
+  json_packer::CompressOptions {
     enable_value_pool: o.enable_value_pool,
     pool_min_repeats: o.pool_min_repeats,
     pool_min_string_len: o.pool_min_string_len as usize,
@@ -27,7 +27,7 @@ fn to_core_opts(o: &Options) -> json_packer_core::CompressOptions {
 pub fn compress_to_bytes(json_str: &str, opts: &Options) -> Result<Box<[u8]>, JsValue> {
   let value: serde_json::Value = serde_json::from_str(json_str).map_err(|e| JsValue::from_str(&format!("invalid JSON: {e}")))?;
   let core_opts = to_core_opts(opts);
-  let bytes = json_packer_core::compress_to_bytes(&value, &core_opts).map_err(|e| JsValue::from_str(&format!("compress error: {e}")))?;
+  let bytes = json_packer::compress_to_bytes(&value, &core_opts).map_err(|e| JsValue::from_str(&format!("compress error: {e}")))?;
   Ok(bytes.into_boxed_slice())
 }
 
@@ -35,17 +35,17 @@ pub fn compress_to_bytes(json_str: &str, opts: &Options) -> Result<Box<[u8]>, Js
 pub fn compress_to_base64(json_str: &str, opts: &Options) -> Result<String, JsValue> {
   let value: serde_json::Value = serde_json::from_str(json_str).map_err(|e| JsValue::from_str(&format!("invalid JSON: {e}")))?;
   let core_opts = to_core_opts(opts);
-  json_packer_core::compress_to_base64(&value, &core_opts).map_err(|e| JsValue::from_str(&format!("compress error: {e}")))
+  json_packer::compress_to_base64(&value, &core_opts).map_err(|e| JsValue::from_str(&format!("compress error: {e}")))
 }
 
 #[wasm_bindgen]
 pub fn decompress_from_bytes(bytes: &[u8]) -> Result<String, JsValue> {
-  let value = json_packer_core::decompress_from_bytes(bytes).map_err(|e| JsValue::from_str(&format!("decompress error: {e}")))?;
+  let value = json_packer::decompress_from_bytes(bytes).map_err(|e| JsValue::from_str(&format!("decompress error: {e}")))?;
   serde_json::to_string(&value).map_err(|e| JsValue::from_str(&format!("stringify error: {e}")))
 }
 
 #[wasm_bindgen]
 pub fn decompress_from_base64(b64: &str) -> Result<String, JsValue> {
-  let value = json_packer_core::decompress_from_base64(b64).map_err(|e| JsValue::from_str(&format!("decompress error: {e}")))?;
+  let value = json_packer::decompress_from_base64(b64).map_err(|e| JsValue::from_str(&format!("decompress error: {e}")))?;
   serde_json::to_string(&value).map_err(|e| JsValue::from_str(&format!("stringify error: {e}")))
 }
