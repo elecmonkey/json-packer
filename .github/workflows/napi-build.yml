@@ -106,18 +106,11 @@ jobs:
           AR_aarch64_unknown_linux_gnu: aarch64-linux-gnu-ar
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
 
-      - name: Generate index files
-        run: pnpm artifacts
-        working-directory: napi
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: bindings-${{ matrix.target }}
-          path: |
-            napi/*.node
-            napi/index.js
-            napi/index.d.ts
+          path: napi/*.node
           if-no-files-found: error
 
   test:
@@ -163,8 +156,34 @@ jobs:
           name: bindings-${{ matrix.target }}
           path: napi
 
-      - name: List downloaded files
-        run: ls -la
+      - name: Create test index.js
+        shell: bash
+        run: |
+          # Find the .node file
+          NODE_FILE=$(find . -name "*.node" | head -1)
+          if [ -z "$NODE_FILE" ]; then
+            echo "No .node file found!"
+            exit 1
+          fi
+          
+          # Create a simple index.js for testing
+          cat > index.js << 'EOF'
+          const { existsSync } = require('fs')
+          const { join } = require('path')
+          
+          // Find the .node file in current directory
+          const fs = require('fs')
+          const files = fs.readdirSync(__dirname)
+          const nodeFile = files.find(f => f.endsWith('.node'))
+          
+          if (nodeFile && existsSync(join(__dirname, nodeFile))) {
+            module.exports = require('./' + nodeFile)
+          } else {
+            throw new Error('No .node file found in ' + __dirname)
+          }
+          EOF
+          
+          echo "Created test index.js, found node file: $NODE_FILE"
         working-directory: napi
 
       - name: Test bindings
@@ -200,9 +219,15 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: napi/artifacts
+          path: artifacts
 
-      - name: Move artifacts
+      - name: Move artifacts to napi directory
+        run: |
+          # Move all .node files to napi directory
+          find artifacts -name "*.node" -exec cp {} napi/ \;
+          ls -la napi/*.node
+        
+      - name: Generate index files
         run: pnpm artifacts
         working-directory: napi
 
