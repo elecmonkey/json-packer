@@ -37,6 +37,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "json-packer-wasm"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "json_packer_core",
+ "serde_json",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "json_packer_core"
 version = "0.1.0"
 dependencies = [
@@ -44,16 +54,6 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
-]
-
-[[package]]
-name = "json_packer_wasm"
-version = "0.1.0"
-dependencies = [
- "js-sys",
- "json_packer_core",
- "serde_json",
- "wasm-bindgen",
 ]
 
 [[package]]

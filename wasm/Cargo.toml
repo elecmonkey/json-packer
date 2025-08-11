@@ -1,8 +1,16 @@
 [package]
-name = "json_packer_wasm"
+name = "json-packer-wasm"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
+description = "WebAssembly bindings for json-packer - A high-performance JSON compression library"
+authors = ["Elecmonkey"]
+repository = "https://github.com/elecmonkey/json-packer"
+homepage = "https://json.edev.uno/"
+documentation = "https://json.edev.uno/"
+readme = "README.md"
+keywords = ["json", "compression", "wasm", "webassembly", "performance"]
+categories = ["compression", "wasm", "web-programming"]
 
 [lib]
 crate-type = ["cdylib"]
