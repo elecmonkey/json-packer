@@ -1,12 +1,34 @@
 {
   "name": "json-packer-napi",
   "version": "0.1.0",
+  "description": "Node.js N-API bindings for json-packer-core - reversible JSON binary compression",
   "main": "index.js",
   "types": "index.d.ts",
+  "author": "Elecmonkey",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elecmonkey/json-packer",
+    "directory": "napi"
+  },
+  "homepage": "https://json.edev.uno/",
+  "keywords": ["json", "compression", "napi", "rust", "binary", "huffman"],
+  "engines": {
+    "node": ">= 14"
+  },
+  "os": ["win32", "darwin", "linux"],
+  "cpu": ["x64", "arm64"],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node"
+  ],
   "scripts": {
     "build": "napi build --platform --release",
     "build:debug": "napi build",
-    "artifacts": "napi artifacts"
+    "artifacts": "napi artifacts",
+    "test": "node test.js",
+    "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.18.4"
