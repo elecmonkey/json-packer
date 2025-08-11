@@ -1,4 +1,4 @@
-# json-packer-core
+# json-packer
 
 Rust 核心库：轻量、可逆的 JSON 二进制压缩/解压工具。
 
@@ -15,9 +15,9 @@ Rust 核心库：轻量、可逆的 JSON 二进制压缩/解压工具。
 
 ```toml
 [dependencies]
-json-packer-core = "0.1.0"
+json-packer = "0.1.0"
 # 或本地开发：
-# json-packer-core = { path = "../core" }
+# json-packer = { path = "../core" }
 ```
 
 ## 公共 API
@@ -46,7 +46,7 @@ pub struct CompressOptions {
 ## 快速上手
 
 ```rust
-use json_packer_core::{compress_to_base64, decompress_from_base64, CompressOptions};
+use json_packer::{compress_to_base64, decompress_from_base64, CompressOptions};
 use serde_json::json;
 
 let v = json!({
@@ -64,8 +64,8 @@ assert_eq!(v, out);
 ### 启用字符串值池（无状态调用）
 
 ```rust
-use json_packer_core::{CompressOptions};
-use json_packer_core::encode::compress_with_options; // 按调用传入，无全局状态
+use json_packer::{CompressOptions};
+use json_packer::encode::compress_with_options; // 按调用传入，无全局状态
 use serde_json::json;
 
 let opt = CompressOptions{

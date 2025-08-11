@@ -1,4 +1,4 @@
-use json_packer_core::test_expose::{BitWriter, BitReader, write_uleb128, read_uleb128, write_sleb128, read_sleb128};
+use json_packer::test_expose::{BitWriter, BitReader, write_uleb128, read_uleb128, write_sleb128, read_sleb128};
 
 #[test]
 fn uleb128_roundtrip() {

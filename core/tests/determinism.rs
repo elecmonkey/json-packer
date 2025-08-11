@@ -1,4 +1,4 @@
-use json_packer_core::{compress_to_bytes, CompressOptions};
+use json_packer::{compress_to_bytes, CompressOptions};
 use serde_json::json;
 
 #[test]

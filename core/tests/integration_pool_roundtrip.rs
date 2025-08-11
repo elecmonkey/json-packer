@@ -1,6 +1,6 @@
 use serde_json::json;
-use json_packer_core::{compress_to_bytes, decompress_from_bytes, CompressOptions};
-use json_packer_core::test_expose::compress_with_options;
+use json_packer::{compress_to_bytes, decompress_from_bytes, CompressOptions};
+use json_packer::test_expose::compress_with_options;
 
 #[test]
 fn v2_string_pool_roundtrip_and_benefit() {

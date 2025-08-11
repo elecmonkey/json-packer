@@ -1,4 +1,4 @@
-use json_packer_core::test_expose::tag;
+use json_packer::test_expose::tag;
 
 #[test]
 fn type_tags_values() {

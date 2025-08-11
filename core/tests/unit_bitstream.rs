@@ -1,4 +1,4 @@
-use json_packer_core::test_expose::{BitReader, BitWriter};
+use json_packer::test_expose::{BitReader, BitWriter};
 
 #[test]
 fn bitwriter_reader_bits() {

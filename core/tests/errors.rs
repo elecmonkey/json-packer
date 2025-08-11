@@ -1,4 +1,4 @@
-use json_packer_core::{compress_to_bytes, CompressOptions};
+use json_packer::{compress_to_bytes, CompressOptions};
 use serde_json::json;
 
 #[test]
@@ -9,8 +9,8 @@ fn bad_magic() {
     bytes.push(0x01);
     bytes.push(0x00); // dict_len
     bytes.push(0x00); // pool_len
-    let err = json_packer_core::decompress_from_bytes(&bytes).unwrap_err();
-    assert!(matches!(err, json_packer_core::Error::BadMagic));
+    let err = json_packer::decompress_from_bytes(&bytes).unwrap_err();
+    assert!(matches!(err, json_packer::Error::BadMagic));
 }
 
 #[test]
@@ -21,8 +21,8 @@ fn bad_version() {
     bytes.push(0xFF);
     bytes.push(0x00); // dict_len
     bytes.push(0x00); // pool_len
-    let err = json_packer_core::decompress_from_bytes(&bytes).unwrap_err();
-    assert!(matches!(err, json_packer_core::Error::BadVersion));
+    let err = json_packer::decompress_from_bytes(&bytes).unwrap_err();
+    assert!(matches!(err, json_packer::Error::BadVersion));
 }
 
 #[test]
@@ -30,9 +30,9 @@ fn truncated_data() {
     let v = json!({"a": 1});
     let mut bytes = compress_to_bytes(&v, &CompressOptions::default()).unwrap();
     bytes.truncate(bytes.len().saturating_sub(3));
-    let err = json_packer_core::decompress_from_bytes(&bytes).unwrap_err();
+    let err = json_packer::decompress_from_bytes(&bytes).unwrap_err();
     // 可能触发 BitstreamOutOfBounds 或 VarintError
-    matches!(err, json_packer_core::Error::BitstreamOutOfBounds | json_packer_core::Error::VarintError);
+    matches!(err, json_packer::Error::BitstreamOutOfBounds | json_packer::Error::VarintError);
 }
 
 #[test]
@@ -52,6 +52,6 @@ fn utf8_error_in_string() {
     // invalid utf-8 byte
     bytes.push(0xFF);
 
-    let err = json_packer_core::decompress_from_bytes(&bytes).unwrap_err();
-    matches!(err, json_packer_core::Error::Utf8(_));
+    let err = json_packer::decompress_from_bytes(&bytes).unwrap_err();
+    matches!(err, json_packer::Error::Utf8(_));
 }

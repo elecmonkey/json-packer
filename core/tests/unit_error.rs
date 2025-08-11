@@ -1,4 +1,4 @@
-use json_packer_core::Error;
+use json_packer::Error;
 
 #[test]
 fn error_variants_debug() {

@@ -1,4 +1,4 @@
-use json_packer_core::test_expose::{BitWriter, BitReader, write_header, read_header, MAGIC, VERSION_V1};
+use json_packer::test_expose::{BitWriter, BitReader, write_header, read_header, MAGIC, VERSION_V1};
 
 #[test]
 fn header_roundtrip() {

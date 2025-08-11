@@ -1,12 +1,12 @@
 [package]
-name = "json-packer-core"
+name = "json-packer"
 version = "0.1.0"
 edition = "2024"
 authors = ["Elecmonkey"]
 description = "Reversible JSON binary compression/decompression library with Huffman-encoded keys and optional string value pooling"
 repository = "https://github.com/elecmonkey/json-packer"
 homepage = "https://json.edev.uno"
-documentation = "https://docs.rs/json-packer-core"
+documentation = "https://docs.rs/json-packer"
 readme = "README.md"
 license = "MIT"
 keywords = ["json", "compression", "binary", "huffman", "serialization"]

@@ -1,5 +1,5 @@
-use json_packer_core::test_expose::{BitWriter, write_header, VERSION_V2};
-use json_packer_core::{decompress_from_bytes, Error};
+use json_packer::test_expose::{BitWriter, write_header, VERSION_V2};
+use json_packer::{decompress_from_bytes, Error};
 
 #[test]
 fn pool_missing_should_error() {
@@ -7,7 +7,7 @@ fn pool_missing_should_error() {
     let mut w = BitWriter::new();
     write_header(&mut w, VERSION_V2, 0, 0);
     // 字典区：key_count=0
-    json_packer_core::test_expose::write_uleb128(&mut w, 0);
+    json_packer::test_expose::write_uleb128(&mut w, 0);
     // 数据区：string 引用 id=0
     // tag=101 + is_ref=1 + id=0
     w.write_bits(0b101, 3);
@@ -24,7 +24,7 @@ fn pool_id_out_of_range() {
     let mut w = BitWriter::new();
     write_header(&mut w, VERSION_V2, 0, 0);
     // 字典区：key_count=0
-    json_packer_core::test_expose::write_uleb128(&mut w, 0);
+    json_packer::test_expose::write_uleb128(&mut w, 0);
     w.write_bits(0b101, 3);
     w.write_bits(1, 1);
     // uleb128(1)

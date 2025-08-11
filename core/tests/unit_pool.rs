@@ -1,4 +1,4 @@
-use json_packer_core::{test_expose::{BitWriter, BitReader, write_header, read_header, VERSION_V2, collect_string_pool}, PoolConfig};
+use json_packer::{test_expose::{BitWriter, BitReader, write_header, read_header, VERSION_V2, collect_string_pool}, PoolConfig};
 use serde_json::json;
 
 #[test]

@@ -1,6 +1,6 @@
 use proptest::prelude::*;
 
-use json_packer_core::{compress_to_bytes, decompress_from_bytes, CompressOptions};
+use json_packer::{compress_to_bytes, decompress_from_bytes, CompressOptions};
 
 fn arb_json() -> impl Strategy<Value = serde_json::Value> {
     // Build a JSON generator without NaN/Inf

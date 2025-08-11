@@ -1,6 +1,6 @@
-use json_packer_core::HuffmanCodec;
+use json_packer::HuffmanCodec;
 use std::collections::HashMap;
-use json_packer_core::test_expose::{BitWriter, BitReader};
+use json_packer::test_expose::{BitWriter, BitReader};
 
 #[test]
 fn huffman_build_basic() {

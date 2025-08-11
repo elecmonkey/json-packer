@@ -1,4 +1,4 @@
-use json_packer_core::{encode_base64, decode_base64};
+use json_packer::{encode_base64, decode_base64};
 use base64::Engine; // bring trait for STANDARD.encode
 
 #[test]

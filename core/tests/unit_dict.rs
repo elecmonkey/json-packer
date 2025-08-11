@@ -1,5 +1,5 @@
 use serde_json::json;
-use json_packer_core::{compress_to_bytes, CompressOptions};
+use json_packer::{compress_to_bytes, CompressOptions};
 
 #[test]
 fn dictionary_roundtrip_via_public_api() {
