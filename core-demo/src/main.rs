@@ -1,5 +1,5 @@
 use std::fs;
-use json_packer_core::{compress_to_bytes, compress_to_base64, decompress_from_bytes, decompress_from_base64, CompressOptions};
+use json_packer::{compress_to_bytes, compress_to_base64, decompress_from_bytes, decompress_from_base64, CompressOptions};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 1. 读取大 JSON 文件
