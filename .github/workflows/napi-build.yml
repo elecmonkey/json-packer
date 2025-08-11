@@ -106,11 +106,18 @@ jobs:
           AR_aarch64_unknown_linux_gnu: aarch64-linux-gnu-ar
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
 
+      - name: Generate index files
+        run: pnpm artifacts
+        working-directory: napi
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: bindings-${{ matrix.target }}
-          path: napi/*.node
+          path: |
+            napi/*.node
+            napi/index.js
+            napi/index.d.ts
           if-no-files-found: error
 
   test:
@@ -155,6 +162,10 @@ jobs:
         with:
           name: bindings-${{ matrix.target }}
           path: napi
+
+      - name: List downloaded files
+        run: ls -la
+        working-directory: napi
 
       - name: Test bindings
         run: pnpm test
