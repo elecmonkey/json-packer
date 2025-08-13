@@ -1,0 +1,19 @@
+{
+  "name": "json-packer-wasm-build",
+  "version": "0.1.1",
+  "description": "WebAssembly 绑定构建工具",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "build:wasm": "export PATH=\"$HOME/.cargo/bin:$PATH\" && wasm-pack build --target web --release",
+    "build:compress": "node compress.js",
+    "build:all": "pnpm build:wasm && pnpm build:compress"
+  },
+  "keywords": ["wasm", "json", "compression", "build"],
+  "author": "Elecmonkey",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.25.9"
+  },
+  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
+}
