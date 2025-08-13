@@ -1,13 +1,12 @@
 [package]
 name = "json-packer-wasm"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "MIT"
 description = "WebAssembly bindings for json-packer - A high-performance JSON compression library"
 authors = ["Elecmonkey"]
 repository = "https://github.com/elecmonkey/json-packer"
 homepage = "https://json.edev.uno/"
-documentation = "https://json.edev.uno/"
 readme = "README.md"
 keywords = ["json", "compression", "wasm", "webassembly", "performance"]
 categories = ["compression", "wasm", "web-programming"]
@@ -17,6 +16,19 @@ crate-type = ["cdylib"]
 
 [dependencies]
 json-packer = { path = "../core" }
-serde_json = "1"
+serde_json = { version = "1", default-features = false, features = ["alloc"] }
 wasm-bindgen = "0.2"
 js-sys = "0.3"
+
+[profile.release]
+opt-level = "z"     # 最大化体积优化
+lto = true          # 链接时优化
+codegen-units = 1   # 单个代码生成单元，更好的优化
+panic = "abort"     # 减少panic处理代码
+strip = true        # 移除调试符号
+
+[profile.release.package."*"]
+opt-level = "z"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-Oz", "--enable-bulk-memory"]
