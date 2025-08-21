@@ -1,0 +1,36 @@
+[package]
+name = "json-packer-cli"
+version = "0.1.0"
+edition = "2021"
+authors = ["Elecmonkey"]
+description = "Command line tool for JSON compression using json-packer"
+repository = "https://github.com/elecmonkey/json-packer"
+license = "MIT"
+keywords = ["json", "compression", "cli", "binary"]
+categories = ["command-line-utilities", "compression"]
+
+[[bin]]
+name = "json-packer-cli"
+path = "src/main.rs"
+
+[dependencies]
+json-packer = { path = "../core" }
+clap = { version = "4.0", features = ["derive", "cargo"] }
+serde_json = "1.0"
+anyhow = "1.0"
+thiserror = "1.0"
+rayon = "1.8"
+indicatif = "0.17"
+hex = "0.4"
+
+[dev-dependencies]
+tempfile = "3.0"
+assert_cmd = "2.0"
+predicates = "3.0"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
