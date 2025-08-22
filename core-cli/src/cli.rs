@@ -2,7 +2,7 @@ use clap::{Parser, Subcommand, Args, ValueEnum};
 
 #[derive(Debug, Parser)]
 #[command(name = "json-packer-cli")]
-#[command(about = "JSON compression/decompression command line tool")]
+#[command(about = "JSON compression/decompression command line tool\n\nDocumentation: https://json.edev.uno/guide/cli.html")]
 #[command(version, author)]
 pub struct Cli {
     #[command(subcommand)]
